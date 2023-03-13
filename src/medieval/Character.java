@@ -20,11 +20,15 @@ public class Character {
     private int locationChoice;
     private Location goal;
     
-    ArrayList<Location> locationList = new ArrayList<Location>(); 
-    
-    
-    
-    
+    ArrayList<Location> locationList = new ArrayList<Location>();
+
+
+    /**
+     * Character Constructor if hp, strength and prW arguments are given
+     * @param hp
+     * @param strength
+     * @param prW
+     */
     public Character(int hp, int strength, Weapon prW){
         this.setHP(hp);
         this.setStrength(strength);
@@ -42,7 +46,11 @@ public class Character {
         this.currentLocation = locationList.get(this.currentLocationNum);
         this.goal = this.locationList.get(this.locationList.size()-1);
     }
-    
+
+    /**
+     * Character constructor if no arguments are given
+     * Please do not use currently, many things missing
+     */
     public Character(){
         this.setHP(rand.nextInt(100)+1);
         this.setStrength(rand.nextInt(10)+1);
@@ -50,7 +58,7 @@ public class Character {
     
     
     /**
-     * Heals the enemy
+     * Heals the Character
      * if value is negative, value becomes 0
      * @param heal 
      */
@@ -58,7 +66,13 @@ public class Character {
         if (heal<0)heal=0;
         this.setHP(this.getHP()+heal);
     }
-    
+
+    /**
+     * Lets Character attack an Enemy
+     * Also has a counter on how many enemies were slain
+     * If there are no enemies, Character moves on to another location
+     * @param en
+     */
     public void attack(Enemy en){
         if (this.getHP()!=0){
             en.setHP(en.getHP() - this.getPrW().getDmg()+this.getStrength());
@@ -95,7 +109,10 @@ public class Character {
         }
         
     }
-    
+
+    /**
+     * If hp is less than 0, the Character dies
+     */
     public void die(){
         if (!this.isDead()){
             if(this.getHP()<=0){

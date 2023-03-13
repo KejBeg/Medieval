@@ -75,11 +75,10 @@ public class Enemy {
     public String getName() {
         return name;
     }
-    int getHP(){
+    int getHP() {
         //this.die();
         return this.hp;
     }
-    
     int getStrength(){
         return this.strength;
     }

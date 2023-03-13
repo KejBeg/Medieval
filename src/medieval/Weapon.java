@@ -5,7 +5,13 @@ public class Weapon {
     String name;
     private int drb;
     private int dmg;
-    
+
+    /**
+     * Weapon Constructor if name, drb and dmg arguments are provided
+     * @param name
+     * @param drb
+     * @param dmg
+     */
     public Weapon(String name, int drb, int dmg){
         this.setName(name);
         this.setDrb(drb);

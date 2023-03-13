@@ -13,7 +13,6 @@ public class Main {
         
         Weapon m4 = new Weapon("M4A4", 100, 32);
         Character hero = new Character(100, 10, m4);
-
         FightManager.fight(hero);
 
         /*int deadEs = 0;
