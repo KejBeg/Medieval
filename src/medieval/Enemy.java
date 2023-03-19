@@ -6,12 +6,12 @@ import java.util.Random;
 public class Enemy {
     Random rand = new Random();
 
-    String[] nameList = new String[] {"Brock", "Heisenberg", "Jake", "John", "Robert", "Rudolf", "Emily", "Linus", "Walter", "Hank", "Marie", "Skyler", "Mike", "Mathew", "Greg", "Craig", "Jimmy", " Saul", ""};
+    String[] nameList = new String[] {"Brock", "Heisenberg", "Jake", "John", "Robert", "Rudolf", "Emily", "Linus", "Walter", "Hank", "Marie", "Skyler", "Mike", "Mathew", "Greg", "Craig", "Jimmy", "Saul"};
     private String name;
     private int hp;
     private int strength;
     private Weapon prW;
-    private boolean dead;
+    private boolean dead = false;
 
     /**
      * Enemy constructor if HP and Strength arguments are given

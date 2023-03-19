@@ -14,8 +14,8 @@ public class FightManager {
                 e.attack(ch);
 
             }
-
         }
+
         System.out.println("end but why ?!??!");
         if (ch.isDead()) System.out.println("Hero died");
 

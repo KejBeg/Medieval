@@ -12,22 +12,24 @@ public class Character {
     private int hp;
     private int strength;
     private Weapon prW;
-    private boolean dead;
+    private boolean dead = false;
 
     private int numOfEnemies;
     private Location currentLocation;
-    private int currentLocationNum;   
+    private int currentLocationNum;
+
     private int locationChoice;
     private Location goal;
     
     ArrayList<Location> locationList = new ArrayList<Location>();
+    Location[] nextLocations = new Location[2];
 
 
     /**
      * Character Constructor if hp, strength and prW arguments are given
-     * @param hp
-     * @param strength
-     * @param prW
+     * @param hp health, int
+     * @param strength affects damage, int
+     * @param prW weapon, Weapon custom class
      */
     public Character(int hp, int strength, Weapon prW){
         this.setHP(hp);
@@ -35,16 +37,22 @@ public class Character {
         this.setPrW(prW);
 
         // Creating Locations
+        //Always create odd amount of Locations
         this.locationList.add(new Location("Spawn", 1));
         this.locationList.add(new Location("The Forest", 2));
         this.locationList.add(new Location("The Shroomland", 3));
-        this.locationList.add(new Location("The Abbys", 4));
-        this.locationList.add(new Location("Nether", 5));
+        this.locationList.add(new Location("The Abyss", 4));
+        this.locationList.add(new Location("The Nether", 5));
         this.locationList.add(new Location("The End", 6));
         
         this.currentLocationNum = 0;
         this.currentLocation = locationList.get(this.currentLocationNum);
         this.goal = this.locationList.get(this.locationList.size()-1);
+
+        //Setting next locations
+        this.nextLocations[0] = this.locationList.get(1);
+        this.nextLocations[1] = this.locationList.get(2);
+
     }
 
     /**
@@ -60,7 +68,7 @@ public class Character {
     /**
      * Heals the Character
      * if value is negative, value becomes 0
-     * @param heal 
+     * @param heal int value of how much Character is healed
      */
     public void heal(int heal){
         if (heal<0)heal=0;
@@ -71,7 +79,7 @@ public class Character {
      * Lets Character attack an Enemy
      * Also has a counter on how many enemies were slain
      * If there are no enemies, Character moves on to another location
-     * @param en
+     * @param en enemy, Enemy custom class
      */
     public void attack(Enemy en){
         if (this.getHP()!=0){
@@ -89,23 +97,26 @@ public class Character {
     }
     
     public void move(){
-        if (this.currentLocationNum+1<=this.locationList.size()){
+        System.out.println(currentLocationNum);
+        if (this.currentLocationNum+2<=this.locationList.size()){
             System.out.println("Select the location you want to go into\n");
             System.out.println("You can choose from: \n");
-            System.out.println(this.locationList.get(2*currentLocationNum+1).getName() + "[1] or " + this.locationList.get(currentLocationNum+2).getName() + "[2]");
+            System.out.println(this.locationList.get(currentLocationNum+1).getName() + "[1] or " + this.locationList.get(currentLocationNum+2).getName() + "[2]");
             locationChoice = scanner.nextInt();
             
             if (locationChoice == 1){ //this.locationList.get(currentLocationNum+1).getName()
-                this.currentLocationNum = this.currentLocationNum+1;
+                this.currentLocation = this.locationList.get(currentLocationNum+1);
+                this.currentLocationNum = this.currentLocationNum + 2;
             } else if (locationChoice == 2){ // this.locationList.get(currentLocationNum+2).getName()
-                this.currentLocationNum = this.currentLocationNum+2;
+                this.currentLocation = this.locationList.get(currentLocationNum+2);
+                this.currentLocationNum = this.currentLocationNum + 3;
             }
             
-            this.currentLocation = this.locationList.get(this.currentLocationNum);
+            //this.currentLocation = this.locationList.get(this.currentLocationNum);
             System.out.println("The hero moved to " + this.currentLocation.getName());
             
         } else {
-            System.out.println("You Won");
+            this.currentLocation = this.goal;
         }
         
     }
@@ -140,9 +151,7 @@ public class Character {
     public Location getCurrentLocation() {
         return currentLocation;
     }
-    public Location getGoal() {
-        return goal;
-    }
+
     
     
     void setHP(int hp){
