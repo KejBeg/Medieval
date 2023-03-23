@@ -30,7 +30,7 @@ public class Enemy {
     public Enemy(){
         int nameRand = rand.nextInt(nameList.length);
         //System.out.println(nameRand);
-        this.setName(nameList[nameRand]);
+        this.setName(this.nameList[nameRand]);
         this.setHP(rand.nextInt(100)+1);
         this.setStrength(rand.nextInt(10)+1);
     }
@@ -51,7 +51,7 @@ public class Enemy {
      * @param hero
      */
     public void attack(Character hero){
-        if (this.getHP()!=0){
+        if (this.getHP()!=0 && !this.isDead() && !hero.isDead()){
             hero.setHP(hero.getHP() - this.getStrength()); //this.getPrW().getDmg()+
             //getPrW().setDrb(getPrW().getDrb()-5);
             System.out.println(this.getName() + " has hit the hero for " + this.getStrength() + " damage");

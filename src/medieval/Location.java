@@ -6,9 +6,7 @@ import java.util.ArrayList;
 public class Location {
     String name;
     int numOfEnemies;
-    
-    int numOfLocations;
-    int currentLocation;
+
     
     
     ArrayList<Location> nextLocation = new ArrayList();

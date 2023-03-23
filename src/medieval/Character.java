@@ -24,7 +24,6 @@ public class Character {
     ArrayList<Location> locationList = new ArrayList<Location>();
     Location[] nextLocations = new Location[2];
 
-
     /**
      * Character Constructor if hp, strength and prW arguments are given
      * @param hp health, int
@@ -44,7 +43,7 @@ public class Character {
         this.locationList.add(new Location("The Abyss", 4));
         this.locationList.add(new Location("The Nether", 5));
         this.locationList.add(new Location("The End", 6));
-        
+
         this.currentLocationNum = 0;
         this.currentLocation = locationList.get(this.currentLocationNum);
         this.goal = this.locationList.get(this.locationList.size()-1);
@@ -57,7 +56,7 @@ public class Character {
 
     /**
      * Character constructor if no arguments are given
-     * Please do not use currently, many things missing
+     * Please do not use currently, many things are missing
      */
     public Character(){
         this.setHP(rand.nextInt(100)+1);
@@ -82,43 +81,50 @@ public class Character {
      * @param en enemy, Enemy custom class
      */
     public void attack(Enemy en){
-        if (this.getHP()!=0){
-            en.setHP(en.getHP() - this.getPrW().getDmg()+this.getStrength());
-            getPrW().setDrb(getPrW().getDrb()-5);
-            System.out.println("The hero has hit " + en.getName() + " for " + (this.getPrW().getDmg()+this.getStrength()) + " damage");
-            
-        } else this.die();
+        if (!this.isDead()){
+            int damage = this.getPrW().getDmg()+this.getStrength();
+            System.out.println("The hero has hit " + en.getName() + " for " + damage + " damage");
+            if (damage >= 100) damage = 100;
+            en.setHP(en.getHP() - damage);
+            //getPrW().setDrb(getPrW().getDrb()-5);
+        }
         en.die();
-        this.numOfEnemies = currentLocation.numOfEnemies--;
+        if (en.isDead()){
+            currentLocation.numOfEnemies--;
+        }
         //System.out.println(this.numOfEnemies);
-        if (this.numOfEnemies<=0){
+        if (currentLocation.numOfEnemies<=0){
             this.move();
         }
     }
     
     public void move(){
-        System.out.println(currentLocationNum);
-        if (this.currentLocationNum+2<=this.locationList.size()){
-            System.out.println("Select the location you want to go into\n");
-            System.out.println("You can choose from: \n");
-            System.out.println(this.locationList.get(currentLocationNum+1).getName() + "[1] or " + this.locationList.get(currentLocationNum+2).getName() + "[2]");
-            locationChoice = scanner.nextInt();
-            
-            if (locationChoice == 1){ //this.locationList.get(currentLocationNum+1).getName()
-                this.currentLocation = this.locationList.get(currentLocationNum+1);
-                this.currentLocationNum = this.currentLocationNum + 2;
-            } else if (locationChoice == 2){ // this.locationList.get(currentLocationNum+2).getName()
-                this.currentLocation = this.locationList.get(currentLocationNum+2);
-                this.currentLocationNum = this.currentLocationNum + 3;
+        if (!this.isDead()) {
+            if (this.currentLocationNum + 3 <= this.locationList.size()) {
+                System.out.println("Select the location you want to go into\n");
+                System.out.println("You can choose from: \n");
+                System.out.println(this.locationList.get(currentLocationNum + 1).getName() + "[1] or " + this.locationList.get(currentLocationNum + 2).getName() + "[2]");
+                locationChoice = scanner.nextInt();
+
+                if (locationChoice == 1) { //this.locationList.get(currentLocationNum+1).getName()
+                    this.currentLocation = this.locationList.get(currentLocationNum + 1);
+                    this.currentLocationNum = this.currentLocationNum + 2;
+                } else if (locationChoice == 2) { // this.locationList.get(currentLocationNum+2).getName()
+                    this.currentLocation = this.locationList.get(currentLocationNum + 2);
+                    this.currentLocationNum = this.currentLocationNum + 3;
+                }
+
+                //this.currentLocation = this.locationList.get(this.currentLocationNum);
+                System.out.println("The hero moved to " + this.currentLocation.getName());
+                FightManager.fight(this);
+
+            } else {
+                this.currentLocation = this.goal;
+                System.out.println("The hero  moved to " + this.goal.getName());
+                System.out.println(this.currentLocation.getNumOfEnemies());
+                FightManager.fight(this);
             }
-            
-            //this.currentLocation = this.locationList.get(this.currentLocationNum);
-            System.out.println("The hero moved to " + this.currentLocation.getName());
-            
-        } else {
-            this.currentLocation = this.goal;
         }
-        
     }
 
     /**
