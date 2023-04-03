@@ -3,113 +3,51 @@ package medieval;
 
 import java.util.Random;
 
-public class Enemy {
+public class Enemy extends Character{
     Random rand = new Random();
 
     String[] nameList = new String[] {"Brock", "Heisenberg", "Jake", "John", "Robert", "Rudolf", "Emily", "Linus", "Walter", "Hank", "Marie", "Skyler", "Mike", "Mathew", "Greg", "Craig", "Jimmy", "Saul"};
-    private String name;
-    private int hp;
-    private int strength;
-    private Weapon prW;
-    private boolean dead = false;
 
-    /**
-     * Enemy constructor if HP and Strength arguments are given
-     * @param hp
-     * @param strength
-     */
-    public Enemy(String name, int hp, int strength){
-        this.setName(name);
-        this.setHP(hp);
-        this.setStrength(strength);
+    public Enemy(String name, int hp, int strength, Weapon primaryWeapon) {
+        super(name, hp, strength, primaryWeapon);
     }
 
-    /**
-     * Enemy constructor if no arguments are given
-     */
-    public Enemy(){
-        int nameRand = rand.nextInt(nameList.length);
-        //System.out.println(nameRand);
-        this.setName(this.nameList[nameRand]);
-        this.setHP(rand.nextInt(100)+1);
-        this.setStrength(rand.nextInt(10)+1);
-    }
-    
-    /**
-     * Heals the enemy of given amount.
-     * If value is negative, it becomes 0.
-     * @param heal
-     */
-    public void heal(int heal){
-        if (heal<0)heal=0;
-        this.setHP(this.getHP()+heal);
+    public Enemy() {
+        MeleeWeapon fists = new MeleeWeapon();
+
+        this.setName(nameList[rand.nextInt(nameList.length)]);
+        this.setHP(100);
+        this.setStrength(rand.nextInt(10));
+        this.setPrimaryWeapon(fists);
     }
 
-    /**
-     * Attacks the given Character
-     * Only if this Enemy is not dead
-     * @param hero
-     */
-    public void attack(Character hero){
-        if (this.getHP()!=0 && !this.isDead() && !hero.isDead()){
-            hero.setHP(hero.getHP() - this.getStrength()); //this.getPrW().getDmg()+
-            //getPrW().setDrb(getPrW().getDrb()-5);
-            System.out.println(this.getName() + " has hit the hero for " + this.getStrength() + " damage");
-        } else this.die();
-        hero.die();
+    public void attack(Character target){
+        if (this.isDead()){
+            return;
+        }
+
+        int damage = this.getPrimaryWeapon().getDamage()+this.getStrength();
+        System.out.println("Enemy " + this.getName() + " has hit the brave " + target.getName() + " for " + damage + " damage");
+
+        // Ensuring damage is
+        //if (damage >= 100) damage = 100;
+
+        // Adjusts health of enemy according to damage
+        target.setHP(target.getHP() - damage);
+        //getPrW().setDrb(getPrW().getDrb()-5);
+
+
+        target.die();
+
     }
 
-    /**
-     * If HP of this Enemy is 0, Enemy is deleted
-     */
     public void die(){
-        if (!this.isDead()){
-            if(this.getHP()<=0){
-                this.setDead(true);
-                System.out.println(this.getName() + " was slain by the hero");
-            }
+        if (this.isDead()){
+            return;
         }
-
-    }
-
-    public String getName() {
-        return name;
-    }
-    int getHP() {
-        //this.die();
-        return this.hp;
-    }
-    int getStrength(){
-        return this.strength;
-    }
-    Weapon getPrW() {
-        return prW;
-    }
-    public boolean isDead() {
-        return dead;
-    }
-
-    void setHP(int hp){
-        if (hp > 100){
-            this.hp = 100;
-        } else if(hp<0){
-            this.hp = 0;
-        } else {
-            this.hp = hp;
+        if(this.getHP()<=0){
+            this.setDead(true);
+            Helpers.announce("Enemy " + this.getName() + " has died");
         }
     }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-    void setStrength(int strength){
-        this.strength = strength;
-    }
-    void setPrW(Weapon prW) {
-        this.prW = prW;
-    }
-    public void setDead(boolean dead) {
-        this.dead = dead;
-    }
-
 }
