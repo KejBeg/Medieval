@@ -12,7 +12,7 @@ public class Main {
         System.out.println("Welcome to the game");
         
         // Creating a Weapon class weapon
-        RangedWeapon m4 = new RangedWeapon("M4A4", 100, 32, 50);
+        RangedWeapon m4 = new RangedWeapon("M4A4", 100, 32, 2);
 
         // Creating a Character class character
         Character hero = new Character("Hero", 100, 10, m4);

@@ -6,10 +6,13 @@ import java.util.Random;
 public class Enemy extends Character{
     Random rand = new Random();
 
+    int distanceFromHero
+
     String[] nameList = new String[] {"Brock", "Heisenberg", "Jake", "John", "Robert", "Rudolf", "Emily", "Linus", "Walter", "Hank", "Marie", "Skyler", "Mike", "Mathew", "Greg", "Craig", "Jimmy", "Saul"};
 
-    public Enemy(String name, int hp, int strength, Weapon primaryWeapon) {
+    public Enemy(String name, int hp, int strength, Weapon primaryWeapon, int distanceFromHero) {
         super(name, hp, strength, primaryWeapon);
+
     }
 
     public Enemy() {
@@ -44,10 +47,21 @@ public class Enemy extends Character{
     public void die(){
         if (this.isDead()){
             return;
+
         }
         if(this.getHP()<=0){
             this.setDead(true);
             Helpers.announce("Enemy " + this.getName() + " has died");
         }
+    }
+
+
+
+    public int getDistanceFromHero() {
+        return distanceFromHero;
+    }
+
+    public void setDistanceFromHero(int distanceFromHero) {
+        this.distanceFromHero = distanceFromHero;
     }
 }

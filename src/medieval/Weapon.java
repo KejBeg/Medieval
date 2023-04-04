@@ -1,11 +1,16 @@
 
 package medieval;
 
+import java.util.List;
+
 public class Weapon {
     String name;
     private int durability;
     private int damage;
     private int hitChance;
+    String[] ranges = {"melee", "short", "medium", "long"};
+    String range;
+
 
 
     /**
@@ -14,25 +19,37 @@ public class Weapon {
      */
     public Weapon() {
         this.setName("Generic");
-        this.setDurability(1);
         this.setDamage(1);
         this.setHitChance(50);
     }
 
     /**
      * Weapon Constructor if name, drb and dmg arguments are provided
-     * @param name
-     * @param durability
-     * @param damage
+     * @param name the weapon's name
+     * @param damage the amount of damage it adds
+     * @param hitChance the chance of hitting a target
      */
-    public Weapon(String name, int durability, int damage, int hitChance){
+    public Weapon(String name, int damage, int hitChance, int range){
         this.setName(name);
-        this.setDurability(durability);
         this.setDamage(damage);
         this.setHitChance(hitChance);
+        this.setRange(this.getRanges()[rangeRegulator(range)]);
     }
-    
-    
+
+    public int rangeRegulator(int range){
+        if (range>3){
+            range=3;
+        } else if (range<0) {
+            range = 0;
+        }
+
+        return range;
+    }
+
+    int damageFormula(Character user){
+        
+    }
+
     
     public String getName(){
         return this.name;
@@ -49,18 +66,23 @@ public class Weapon {
         return hitChance;
     }
 
+    public String[] getRanges() {
+        return ranges;
+    }
+    public String getRange() {
+        return range;
+    }
+
     public void setName(String name){
         this.name = name;
     }
-    
-    public void setDurability(int durability){
-        this.durability = durability;
-    }
-    
     public void setDamage(int damage){
         this.damage = damage;
     }
     public void setHitChance(int hitChance) {
         this.hitChance = hitChance;
+    }
+    public void setRange(String range) {
+        this.range = range;
     }
 }

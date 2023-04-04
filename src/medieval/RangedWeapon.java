@@ -1,9 +1,7 @@
 package medieval;
 
 public class RangedWeapon extends Weapon{
-
-
-    public RangedWeapon(String name, int durability, int damage, int hitChance) {
-        super(name, durability, damage, hitChance);
+    public RangedWeapon(String name, int damage, int hitChance, int range) {
+        super(name, damage, hitChance, range);
     }
 }

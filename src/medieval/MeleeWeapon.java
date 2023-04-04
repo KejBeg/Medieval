@@ -1,11 +1,18 @@
 package medieval;
 
 public class MeleeWeapon extends Weapon{
-    public MeleeWeapon(String name, int durability, int damage, int hitChance) {
-        super(name, durability, damage, hitChance);
+
+
+    int damageFormula =
+
+
+    public MeleeWeapon(String name, int damage, int hitChance, int range) {
+        super(name, damage, hitChance, range);
     }
 
     public MeleeWeapon() {
-        super("Fists", 100, 10, 75);
+        super("fists", 10, 50 ,0);
     }
+
+
 }
