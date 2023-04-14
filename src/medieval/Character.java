@@ -1,6 +1,8 @@
 
 package medieval;
 
+import org.w3c.dom.ranges.Range;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
@@ -13,6 +15,7 @@ public class Character { //public abstract class Character = means that construc
     private int hp;
     private int strength;
     private Weapon primaryWeapon;
+    private Weapon secondaryWeapon;
     private boolean dead = false;
 
     
@@ -27,16 +30,34 @@ public class Character { //public abstract class Character = means that construc
 
     /**
      * Character Constructor if hp, strength and prW arguments are given
+     * @param name name, String
      * @param hp health, int
      * @param strength affects damage, int
      * @param primaryWeapon weapon, Weapon custom class
+     * @param secondaryWeapon weapon, Weapon custom class
      */
-    public Character(String name, int hp, int strength, Weapon primaryWeapon){
+    public Character(String name, int hp, int strength, Weapon primaryWeapon, Weapon secondaryWeapon){
         this.setName(name);
         this.setHP(hp);
         this.setStrength(strength);
         this.setPrimaryWeapon(primaryWeapon);
+        this.setSecondaryWeapon(secondaryWeapon);
     }
+
+    /**
+     * Character constructor
+     * @param name name
+     * @param hp amount of health
+     * @param strength strength
+     */
+    public Character(String name, int hp, int strength){
+        this.setName(name);
+        this.setHP(hp);
+        this.setStrength(strength);
+        this.setPrimaryWeapon(new MeleeWeapon());
+        setSecondaryWeapon(new MeleeWeapon());
+    }
+
 
     /**
      * Character constructor if no arguments are given
@@ -49,8 +70,8 @@ public class Character { //public abstract class Character = means that construc
         this.setPrimaryWeapon(fists);
     }
     
-    public void createLocation(String name, int numOfEnemies, String welcomeMessage, String exitMessage){
-        this.locationList.add(new Location(name, numOfEnemies, welcomeMessage, exitMessage));
+    public void createLocation(String name, int numOfEnemies, String welcomeMessage, String exitMessage, Weapon weaponDrop){
+        this.locationList.add(new Location(name, numOfEnemies, welcomeMessage, exitMessage, weaponDrop));
     }
     
     public void nextLocations(Location nextLocation1, Location nextLocation2){
@@ -74,12 +95,31 @@ public class Character { //public abstract class Character = means that construc
      * If there are no enemies, Character moves on to another location.
      * @param target target of Character or children of Character class.
      */
-    public void attack(Character target){
+    public void attack(Enemy target, Weapon usedWeapon){
+
+        int hitChanceRoll = rand.nextInt(101);
+
+        // Makes sure Character is not dead
         if (this.isDead()){
             return;
         }
 
-        int damage = this.getPrimaryWeapon().getDamage()+this.getStrength();
+        // Makes sure target is in range
+        if (usedWeapon.getRange() < target.getDistanceFromTarget()){
+            System.out.println("Your " + usedWeapon.getName() + " could not reach enemy " + target.getName());
+                target.moveCloser();
+            return;
+        }
+
+        // Makes sure Character hit target
+        if (!(hitChanceRoll <= usedWeapon.getHitChance())){
+            System.out.println("You have missed the enemy (" + hitChanceRoll + "%)");
+            return;
+        }
+
+
+        int damage = usedWeapon.damageFormula(this);
+
         System.out.println("The " + this.getName() + " has hit " + target.getName() + " for " + damage + " damage");
 
         // Ensuring damage is
@@ -137,17 +177,18 @@ public class Character { //public abstract class Character = means that construc
     Weapon getPrimaryWeapon() {
         return primaryWeapon;
     }
+    public Weapon getSecondaryWeapon() {
+        return secondaryWeapon;
+    }
     public boolean isDead() {
         return dead;
     }
     public Location getCurrentLocation() {
         return currentLocation;
     }
-
     public int getCurrentLocationNum() {
         return currentLocationNum;
     }
-
     public ArrayList<Location> getLocationList() {
         return locationList;
     }
@@ -170,6 +211,9 @@ public class Character { //public abstract class Character = means that construc
     }
     void setPrimaryWeapon(Weapon primaryWeapon) {
         this.primaryWeapon = primaryWeapon;
+    }
+    public void setSecondaryWeapon(Weapon secondaryWeapon) {
+        this.secondaryWeapon = secondaryWeapon;
     }
     public void setDead(boolean dead) {
         this.dead = dead;

@@ -1,15 +1,19 @@
 
 package medieval;
 
+// Import
 import java.util.List;
+import java.util.Random;
 
 public class Weapon {
+    Random rand = new Random();
+
+    // Variable Init
     String name;
     private int durability;
     private int damage;
     private int hitChance;
-    String[] ranges = {"melee", "short", "medium", "long"};
-    String range;
+    int range;
 
 
 
@@ -21,6 +25,7 @@ public class Weapon {
         this.setName("Generic");
         this.setDamage(1);
         this.setHitChance(50);
+        this.setRange(rangeRegulator(rand.nextInt(4)));
     }
 
     /**
@@ -33,9 +38,14 @@ public class Weapon {
         this.setName(name);
         this.setDamage(damage);
         this.setHitChance(hitChance);
-        this.setRange(this.getRanges()[rangeRegulator(range)]);
+        this.setRange(rangeRegulator(range));
     }
 
+    /**
+     * Makes sure that range is not outside the allowed range
+     * @param range int
+     * @return returns the allowed range
+     */
     public int rangeRegulator(int range){
         if (range>3){
             range=3;
@@ -46,11 +56,16 @@ public class Weapon {
         return range;
     }
 
+    /**
+     * returns the damage that should be given
+     * @param user needs to get some variables
+     * @return returns the damage that should be given
+     */
     int damageFormula(Character user){
-        
+        return user.getPrimaryWeapon().getDamage();
     }
 
-    
+    // Getters
     public String getName(){
         return this.name;
     }
@@ -58,21 +73,17 @@ public class Weapon {
     public int getDurability(){
         return this.durability;
     }
-    
     public int getDamage(){
         return this.damage;
     }
     public int getHitChance() {
         return hitChance;
     }
-
-    public String[] getRanges() {
-        return ranges;
-    }
-    public String getRange() {
+    public int getRange() {
         return range;
     }
 
+    // Setters
     public void setName(String name){
         this.name = name;
     }
@@ -82,7 +93,7 @@ public class Weapon {
     public void setHitChance(int hitChance) {
         this.hitChance = hitChance;
     }
-    public void setRange(String range) {
+    public void setRange(int range) {
         this.range = range;
     }
 }
