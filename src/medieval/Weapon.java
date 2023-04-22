@@ -5,40 +5,33 @@ package medieval;
 import java.util.List;
 import java.util.Random;
 
-public class Weapon {
+public abstract class Weapon {
     Random rand = new Random();
 
     // Variable Init
     String name;
     private int durability;
     private int damage;
+    private int armorBreakingCapability;
     private int hitChance;
     int range;
 
 
-
     /**
-     * Default constructor for Weapon class.
-     * Does not require any arguments
-     */
-    public Weapon() {
-        this.setName("Generic");
-        this.setDamage(1);
-        this.setHitChance(50);
-        this.setRange(rangeRegulator(rand.nextInt(4)));
-    }
-
-    /**
-     * Weapon Constructor if name, drb and dmg arguments are provided
+     * Weapon Constructor if following arguments are provided
      * @param name the weapon's name
+     * @param durability int, after how long this weapon will break
+     * @param armorBreakingCapability int, the damage it deals to the armor
      * @param damage the amount of damage it adds
      * @param hitChance the chance of hitting a target
      */
-    public Weapon(String name, int damage, int hitChance, int range){
-        this.setName(name);
-        this.setDamage(damage);
-        this.setHitChance(hitChance);
-        this.setRange(rangeRegulator(range));
+    public Weapon(String name, int durability, int damage, int armorBreakingCapability, int hitChance, int range) {
+        this.name = name;
+        this.durability = durability;
+        this.damage = damage;
+        this.armorBreakingCapability = armorBreakingCapability;
+        this.hitChance = hitChance;
+        this.range = range;
     }
 
     /**
@@ -73,6 +66,9 @@ public class Weapon {
     public int getDurability(){
         return this.durability;
     }
+    public int getArmorBreakingCapability() {
+        return armorBreakingCapability;
+    }
     public int getDamage(){
         return this.damage;
     }
@@ -86,6 +82,12 @@ public class Weapon {
     // Setters
     public void setName(String name){
         this.name = name;
+    }
+    public void setDurability(int durability) {
+        this.durability = durability;
+    }
+    public void setArmorBreakingCapability(int armorBreakingCapability) {
+        this.armorBreakingCapability = armorBreakingCapability;
     }
     public void setDamage(int damage){
         this.damage = damage;

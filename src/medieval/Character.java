@@ -1,8 +1,6 @@
 
 package medieval;
 
-import org.w3c.dom.ranges.Range;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
@@ -13,10 +11,17 @@ public class Character { //public abstract class Character = means that construc
 
     private String name;
     private int hp;
+    private int defense;
+    private int effectiveH12p;
     private int strength;
+    private int meleeWeaponSkill;
+    private int rangedWeaponSkill;
+    private int magicWeaponSkill;
     private Weapon primaryWeapon;
     private Weapon secondaryWeapon;
+    private Armor equippedArmor;
     private boolean dead = false;
+
 
     
     //Location stuff
@@ -36,49 +41,44 @@ public class Character { //public abstract class Character = means that construc
      * @param primaryWeapon weapon, Weapon custom class
      * @param secondaryWeapon weapon, Weapon custom class
      */
-    public Character(String name, int hp, int strength, Weapon primaryWeapon, Weapon secondaryWeapon){
+    public Character(String name, int hp, int strength, Weapon primaryWeapon, Weapon secondaryWeapon, Armor equippedArmor){
         this.setName(name);
         this.setHP(hp);
         this.setStrength(strength);
         this.setPrimaryWeapon(primaryWeapon);
         this.setSecondaryWeapon(secondaryWeapon);
+        this.setEquippedArmor(equippedArmor);
+    }
+
+    public Character() {
     }
 
     /**
-     * Character constructor
-     * @param name name
-     * @param hp amount of health
-     * @param strength strength
+     * Creates a location
+     * @param name
+     * @param numOfEnemies
+     * @param welcomeMessage
+     * @param exitMessage
+     * @param weaponDrop
      */
-    public Character(String name, int hp, int strength){
-        this.setName(name);
-        this.setHP(hp);
-        this.setStrength(strength);
-        this.setPrimaryWeapon(new MeleeWeapon());
-        setSecondaryWeapon(new MeleeWeapon());
-    }
-
-
-    /**
-     * Character constructor if no arguments are given
-     */
-    public Character(){
-        MeleeWeapon fists = new MeleeWeapon();
-
-        this.setHP(100);
-        this.setStrength(rand.nextInt(10)+1);
-        this.setPrimaryWeapon(fists);
-    }
-    
     public void createLocation(String name, int numOfEnemies, String welcomeMessage, String exitMessage, Weapon weaponDrop){
         this.locationList.add(new Location(name, numOfEnemies, welcomeMessage, exitMessage, weaponDrop));
     }
-    
+
+    /**
+     * Sets the next locations
+     * @param nextLocation1
+     * @param nextLocation2
+     */
     public void nextLocations(Location nextLocation1, Location nextLocation2){
         this.nextLocations[0] = nextLocation1;
         this.nextLocations[1] = nextLocation2;
     }
-    
+
+    public int effectiveHpFormula(int hp, int defense){
+        return hp + defense;
+    }
+
     /**
      * Heals the Character
      * if value is negative, value becomes 0
@@ -86,7 +86,7 @@ public class Character { //public abstract class Character = means that construc
      */
     public void heal(int heal){
         if (heal<0)heal=0;
-        this.setHP(this.getHP()+heal);
+        this.setHP(this.getHp()+heal);
     }
 
     /**
@@ -96,8 +96,19 @@ public class Character { //public abstract class Character = means that construc
      * @param target target of Character or children of Character class.
      */
     public void attack(Enemy target, Weapon usedWeapon){
+        int damage;
 
         int hitChanceRoll = rand.nextInt(101);
+        int modifiedHitchance = usedWeapon.getHitChance();
+
+        if (usedWeapon.getClass().getSimpleName().equals("MeleeWeapon")){
+            modifiedHitchance += meleeWeaponSkill;
+        } else if (usedWeapon.getClass().getSimpleName().equals("RangedWeapon")){
+            modifiedHitchance += rangedWeaponSkill;
+        } else if (usedWeapon.getClass().getSimpleName().equals("MagicWeapon")){
+            modifiedHitchance += magicWeaponSkill;
+        }
+
 
         // Makes sure Character is not dead
         if (this.isDead()){
@@ -107,18 +118,21 @@ public class Character { //public abstract class Character = means that construc
         // Makes sure target is in range
         if (usedWeapon.getRange() < target.getDistanceFromTarget()){
             System.out.println("Your " + usedWeapon.getName() + " could not reach enemy " + target.getName());
-                target.moveCloser();
+            target.moveCloser();
             return;
         }
 
         // Makes sure Character hit target
-        if (!(hitChanceRoll <= usedWeapon.getHitChance())){
-            System.out.println("You have missed the enemy (" + hitChanceRoll + "%)");
+        if (!(hitChanceRoll <= modifiedHitchance)){
+            System.out.println("You have missed the enemy (" + modifiedHitchance + "%)");
             return;
         }
 
+        // Setting the damage
+        damage = usedWeapon.damageFormula(this)  + target.getEquippedArmor().getDamageBlockingPercentage() / 100;
 
-        int damage = usedWeapon.damageFormula(this);
+        // Damaging armor
+        target.getEquippedArmor().lowerDurability(usedWeapon.getArmorBreakingCapability());
 
         System.out.println("The " + this.getName() + " has hit " + target.getName() + " for " + damage + " damage");
 
@@ -126,7 +140,7 @@ public class Character { //public abstract class Character = means that construc
         if (damage >= 100) damage = 100;
 
         // Adjusts health of enemy according to damage
-        target.setHP(target.getHP() - damage);
+        target.setHP(target.getHp() - damage);
         //getPrW().setDrb(getPrW().getDrb()-5);
 
 
@@ -159,16 +173,18 @@ public class Character { //public abstract class Character = means that construc
         if (this.isDead()){
             return;
         }
-        if(this.getHP()<=0){
+        if(this.getHp()<=0){
             this.setDead(true);
             Helpers.announce("The brave " + this.getName() + " has died");
         }
     }
 
+
+    // Getters
     public String getName() {
         return name;
     }
-    int getHP(){
+    int getHp(){
         return this.hp;
     }
     int getStrength(){
@@ -179,6 +195,9 @@ public class Character { //public abstract class Character = means that construc
     }
     public Weapon getSecondaryWeapon() {
         return secondaryWeapon;
+    }
+    public Armor getEquippedArmor() {
+        return this.equippedArmor;
     }
     public boolean isDead() {
         return dead;
@@ -192,8 +211,17 @@ public class Character { //public abstract class Character = means that construc
     public ArrayList<Location> getLocationList() {
         return locationList;
     }
+    public int getMeleeWeaponHandling() {
+        return meleeWeaponSkill;
+    }
+    public int getRangedWeaponHandling() {
+        return rangedWeaponSkill;
+    }
+    public int getMagicWeaponHandling() {
+        return magicWeaponSkill;
+    }
 
-
+    // Setters
     public void setName(String name) {
         this.name = name;
     }
@@ -215,6 +243,9 @@ public class Character { //public abstract class Character = means that construc
     public void setSecondaryWeapon(Weapon secondaryWeapon) {
         this.secondaryWeapon = secondaryWeapon;
     }
+    public void setEquippedArmor(Armor equippedArmor) {
+        this.equippedArmor = equippedArmor;
+    }
     public void setDead(boolean dead) {
         this.dead = dead;
     }
@@ -223,5 +254,14 @@ public class Character { //public abstract class Character = means that construc
     }
     public void setCurrentLocationNum(int currentLocationNum) {
         this.currentLocationNum = currentLocationNum;
+    }
+    public void setMeleeWeaponHandling(int meleeWeaponHandling) {
+        this.meleeWeaponSkill = meleeWeaponHandling;
+    }
+    public void setRangedWeaponHandling(int rangedWeaponHandling) {
+        this.rangedWeaponSkill = rangedWeaponHandling;
+    }
+    public void setMagicWeaponHandling(int magicWeaponHandling) {
+        this.magicWeaponSkill = magicWeaponHandling;
     }
 }

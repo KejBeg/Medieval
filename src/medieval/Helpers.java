@@ -25,9 +25,9 @@ public class Helpers{
      */
     public static void enemyInfo(Enemy enemy, int enemyNum) {
         if (enemyNum == 0 ){
-            System.out.println("Choose what weapon you want to use against Enemy " + enemy.getName() + " - Health: " + enemy.getHP() + ", Strength: " + enemy.getStrength() + ", Weapon: " + enemy.getPrimaryWeapon().getName() + ", Distance: " + enemy.getDistanceFromTarget());
+            System.out.println("Choose what weapon you want to use against Enemy " + enemy.getName() + " - Health: " + enemy.getHp() + ", Strength: " + enemy.getStrength() + ", Weapon: " + enemy.getPrimaryWeapon().getName() + ", Distance: " + enemy.getDistanceFromTarget());
         } else {
-            System.out.println("Choose what weapon you want to use against Enemy[" + enemyNum + "] " + enemy.getName() + " - Health: " + enemy.getHP() + ", Strength: " + enemy.getStrength() + ", Weapon: " + enemy.getPrimaryWeapon().getName() + ", Distance: " + enemy.getDistanceFromTarget());
+            System.out.println("Choose what weapon you want to use against Enemy[" + enemyNum + "] " + enemy.getName() + " - Health: " + enemy.getHp() + ", Strength: " + enemy.getStrength() + ", Weapon: " + enemy.getPrimaryWeapon().getName() + ", Distance: " + enemy.getDistanceFromTarget());
 
         }
     }

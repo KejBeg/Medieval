@@ -12,16 +12,19 @@ public class Main {
         System.out.println("Welcome to the game");
         
         // Creating Weapons
-        RangedWeapon m4 = new RangedWeapon("M4A4", 20, 32, 2);
-        RangedWeapon ak47 = new RangedWeapon("AK-47", 25, 80, 2);
-        RangedWeapon awp = new RangedWeapon("AWP", 75, 95, 3);
-        MeleeWeapon axe = new MeleeWeapon("axe", 15, 40);
-        MeleeWeapon knife = new MeleeWeapon("M9 knife", 10, 65);
+        RangedWeapon m4 = new RangedWeapon("M4A4", 20, 3, 32, 35, 2);
+        RangedWeapon ak47 = new RangedWeapon("AK-47", 25, 5, 80, 2, 3);
+        RangedWeapon awp = new RangedWeapon("AWP", 75, 20, 95, 3, 4);
+        MeleeWeapon axe = new MeleeWeapon("axe", 15, 40, 4);
+        MeleeWeapon knife = new MeleeWeapon("M9 knife", 10, 65, 2);
+
+        // Creating armors
+        Armor chainmailArmor = new Armor("Chainmail", 10, 20);
 
 
 
         // Creating a Character
-        Character hero = new Character("Hero", 100, 100);
+        Character hero = new Character("Hero", 100, 100, new MeleeWeapon(), new MeleeWeapon(), chainmailArmor);
         
         // Creating Locations
         hero.createLocation("Spawn", 1, null, "You survived the first Level :D", m4);

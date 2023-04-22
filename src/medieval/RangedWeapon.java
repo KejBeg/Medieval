@@ -9,7 +9,7 @@ public class RangedWeapon extends Weapon{
      * @param hitChance int
      * @param range int
      */
-    public RangedWeapon(String name, int damage, int hitChance, int range) {
-        super(name, damage, hitChance, range);
+    public RangedWeapon(String name, int damage, int armorBreakingCapability, int durability, int hitChance, int range) {
+        super(name, damage, armorBreakingCapability, durability, hitChance, range);
     }
 }

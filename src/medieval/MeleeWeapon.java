@@ -9,8 +9,8 @@ public class MeleeWeapon extends Weapon{
      * @param damage int
      * @param hitChance int
      */
-    public MeleeWeapon(String name, int damage, int hitChance) {
-        super(name, damage, hitChance, 0);
+    public MeleeWeapon(String name, int damage, int hitChance, int armorBreakingCapability) {
+        super(name, damage, hitChance, armorBreakingCapability, hitChance, 0);
     }
 
     /**
@@ -18,7 +18,7 @@ public class MeleeWeapon extends Weapon{
      * Creates a fist-like weapon
      */
     public MeleeWeapon() {
-        super("fists", 5, 50 ,0);
+        super("fists", 5, 50 ,1, 75, 0);
     }
 
     /**

@@ -12,20 +12,6 @@ public class Enemy extends Character{
     String[] nameList = new String[] {"Brock", "Heisenberg", "Jake", "John", "Robert", "Rudolf", "Emily", "Linus", "Walter", "Hank", "Marie", "Skyler", "Mike", "Mathew", "Greg", "Craig", "Jimmy", "Saul"};
 
     /**
-     * Enemy constructor for all arguments
-     * @param name String, using super
-     * @param hp int, using super
-     * @param strength int, using super
-     * @param primaryWeapon Weapon
-     * @param distanceFromTarget int
-     */
-    public Enemy(String name, int hp, int strength, Weapon primaryWeapon, int distanceFromTarget) {
-        super(name, hp, strength);
-        this.setPrimaryWeapon(primaryWeapon);
-        this.setDistanceFromTarget(distanceFromTarget);
-    }
-
-    /**
      * Enemy constructor if no arguments are given.
      */
     public Enemy() {
@@ -34,6 +20,7 @@ public class Enemy extends Character{
         this.setStrength(rand.nextInt(10));
         this.setPrimaryWeapon(new MeleeWeapon());
         this.setDistanceFromTarget(rand.nextInt(4));
+        this.setEquippedArmor(new Armor());
     }
 
     /**
@@ -64,8 +51,12 @@ public class Enemy extends Character{
             return;
         }
 
-        // Setting a damage value
-        damage = this.getPrimaryWeapon().damageFormula(this);
+        // Setting the damage
+        damage = this.getPrimaryWeapon().damageFormula(this)  + target.getEquippedArmor().getDamageBlockingPercentage() / 100;
+
+        // Damaging armor
+        target.getEquippedArmor().lowerDurability(this.getPrimaryWeapon().getArmorBreakingCapability());
+
 
         // Printing out info
         System.out.println("Enemy " + this.getName() + " has hit the brave " + target.getName() + " for " + damage + " damage");
@@ -74,7 +65,7 @@ public class Enemy extends Character{
         //if (damage >= 100) damage = 100;
 
         // Modifying target values
-        target.setHP(target.getHP() - damage);
+        target.setHP(target.getHp() - damage);
 
         // If target's health is 0, the target dies
         target.die();
@@ -91,7 +82,7 @@ public class Enemy extends Character{
         }
 
         // Makes sure if health is 0
-        if (this.getHP()>0){
+        if (this.getHp()>0){
             return;
         }
 
