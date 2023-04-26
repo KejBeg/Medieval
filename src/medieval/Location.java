@@ -9,7 +9,7 @@ public class Location {
     int numOfEnemies;
     String welcomeMessage;
     String exitMessage;
-    Weapon weaponDrop;
+    Item itemDrop;
 
 
     ArrayList<Enemy> enemies = new ArrayList<Enemy>();
@@ -20,14 +20,14 @@ public class Location {
      * @param numOfEnemies int
      * @param welcomeMessage String
      * @param exitMessage String
-     * @param weaponDrop Weapon, the weapon dropped after completing Location
+     * @param itemDrop Item, the item dropped after completing Location, can be armor or weapon
      */
-    public Location(String name, int numOfEnemies, String welcomeMessage, String exitMessage, Weapon weaponDrop){
+    public Location(String name, int numOfEnemies, String welcomeMessage, String exitMessage, Item itemDrop){
         this.setName(name);
         this.setNumOfEnemies(numOfEnemies);
         this.setWelcomeMessage(welcomeMessage);
         this.setExitMessage(exitMessage);
-        this.setWeaponDrop(weaponDrop);
+        this.setItemDrop(itemDrop);
 
         // Adding enemies
         for(int i = 0; i<numOfEnemies; i++){
@@ -48,8 +48,8 @@ public class Location {
     public String getExitMessage() {
         return exitMessage;
     }
-    public Weapon getWeaponDrop() {
-        return weaponDrop;
+    public Item getItemDrop() {
+        return itemDrop;
     }
     public ArrayList<Enemy> getEnemies() {
         return this.enemies;
@@ -68,7 +68,7 @@ public class Location {
     public void setExitMessage(String exitMessage) {
         this.exitMessage = exitMessage;
     }
-    public void setWeaponDrop(Weapon weaponDrop) {
-        this.weaponDrop = weaponDrop;
+    public void setItemDrop(Item itemDrop) {
+        this.itemDrop = itemDrop;
     }
 }

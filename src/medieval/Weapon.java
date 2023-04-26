@@ -5,12 +5,10 @@ package medieval;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Weapon {
+public abstract class Weapon extends Item {
     Random rand = new Random();
 
     // Variable Init
-    String name;
-    private int durability;
     private int damage;
     private int armorBreakingCapability;
     private int hitChance;
@@ -26,12 +24,12 @@ public abstract class Weapon {
      * @param hitChance the chance of hitting a target
      */
     public Weapon(String name, int durability, int damage, int armorBreakingCapability, int hitChance, int range) {
-        this.name = name;
-        this.durability = durability;
-        this.damage = damage;
-        this.armorBreakingCapability = armorBreakingCapability;
-        this.hitChance = hitChance;
-        this.range = range;
+        this.setName(name);
+        this.setDurability(durability);
+        this.setDamage(damage);
+        this.setArmorBreakingCapability(armorBreakingCapability);
+        this.setHitChance(hitChance);
+        this.setRange(range);
     }
 
     /**
@@ -58,14 +56,39 @@ public abstract class Weapon {
         return user.getPrimaryWeapon().getDamage();
     }
 
+    /**
+     * Damages the weapon
+     * @param damage int, amount of damage dealt
+     */
+    public void damageWeapon(int damage){
+        // Ensures the weapon is not repaired
+        if (damage < 0){
+            return;
+        }
+
+        // Damages the weapon
+        this.setDurability(this.getDurability() + damage);
+    }
+
+    /**
+     * Breaks the weapon if durability is less than 0
+     */
+    public void breakWeapon(){
+        if (this.getDurability() > 0){
+            return;
+        }
+
+        System.out.println("Your " + this.getName() + " has broken");
+
+        this.setName("Broken" + this.getName());
+        this.setDamage(0);
+        this.setArmorBreakingCapability(0);
+
+
+    }
+
     // Getters
-    public String getName(){
-        return this.name;
-    }
-    
-    public int getDurability(){
-        return this.durability;
-    }
+
     public int getArmorBreakingCapability() {
         return armorBreakingCapability;
     }
@@ -80,12 +103,6 @@ public abstract class Weapon {
     }
 
     // Setters
-    public void setName(String name){
-        this.name = name;
-    }
-    public void setDurability(int durability) {
-        this.durability = durability;
-    }
     public void setArmorBreakingCapability(int armorBreakingCapability) {
         this.armorBreakingCapability = armorBreakingCapability;
     }

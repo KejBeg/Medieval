@@ -7,6 +7,13 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+        // Creating an ArrayList of all items
+        ArrayList<Item> itemList = new ArrayList<Item>();
+
+        // Creating an ArrayList of all player owned items
+        ArrayList<Item> playerInventory = new ArrayList<Item>();
+
+
 
         // Introductory message
         System.out.println("Welcome to the game");
@@ -19,12 +26,11 @@ public class Main {
         MeleeWeapon knife = new MeleeWeapon("M9 knife", 10, 65, 2);
 
         // Creating armors
-        Armor chainmailArmor = new Armor("Chainmail", 10, 20);
 
 
 
         // Creating a Character
-        Character hero = new Character("Hero", 100, 100, new MeleeWeapon(), new MeleeWeapon(), chainmailArmor);
+        Character hero = new Character("Hero", 100, 100, new MeleeWeapon(), new MeleeWeapon(), new Armor());
         
         // Creating Locations
         hero.createLocation("Spawn", 1, null, "You survived the first Level :D", m4);

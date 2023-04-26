@@ -18,6 +18,12 @@ public class Helpers{
 
     }
 
+    public static void playerInfo(Character character){
+        System.out.println("Yours Health:" + character.getHp() + ", Defense: " + character.getDefense() + ", Effective HP: " + character.getEffectiveHp());
+        System.out.println("Yours Stats:" + character.getStrength());
+        System.out.println("Your Skills: ");
+    }
+
     /**
      * Prints out the enemy's stats
      * @param enemy required for the stats

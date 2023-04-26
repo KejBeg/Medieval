@@ -1,9 +1,7 @@
 package medieval;
 
-public class Armor {
-    private String name;
+public class Armor extends Item{
     private int damageBlockingPercentage;
-    private int durability;
 
     /**
      * Constructor for Armor if following parameters are given
@@ -41,29 +39,18 @@ public class Armor {
         Helpers.announce("Your " + this.getName() + " armor has been broken");
 
         // "Breaks" the armor
+        this.setName("Broken " + this.getName());
         this.setDurability(0);
         this.setDamageBlockingPercentage(0);
     }
 
     // Getters
-    public String getName() {
-        return name;
-    }
     public int getDamageBlockingPercentage() {
         return damageBlockingPercentage;
     }
-    public int getDurability() {
-        return durability;
-    }
 
     // Setters
-    public void setName(String name) {
-        this.name = name;
-    }
     public void setDamageBlockingPercentage(int damageBlockingPercentage) {
         this.damageBlockingPercentage = damageBlockingPercentage;
-    }
-    public void setDurability(int durability) {
-        this.durability = durability;
     }
 }

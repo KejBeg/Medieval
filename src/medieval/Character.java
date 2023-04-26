@@ -12,7 +12,7 @@ public class Character { //public abstract class Character = means that construc
     private String name;
     private int hp;
     private int defense;
-    private int effectiveH12p;
+    private int effectiveHp;
     private int strength;
     private int meleeWeaponSkill;
     private int rangedWeaponSkill;
@@ -21,6 +21,8 @@ public class Character { //public abstract class Character = means that construc
     private Weapon secondaryWeapon;
     private Armor equippedArmor;
     private boolean dead = false;
+
+
 
 
     
@@ -90,6 +92,13 @@ public class Character { //public abstract class Character = means that construc
     }
 
     /**
+     * @param damage int, damages this by given amount
+     */
+    public void damageThis(int damage){
+        this.setHP((this.getEffectiveHp() - damage)/ (1 + this.getDefense() / 100));
+    }
+
+    /**
      * Lets Character attack a target.
      * Has a counter on remaining enemies.
      * If there are no enemies, Character moves on to another location.
@@ -129,18 +138,18 @@ public class Character { //public abstract class Character = means that construc
         }
 
         // Setting the damage
-        damage = usedWeapon.damageFormula(this)  + target.getEquippedArmor().getDamageBlockingPercentage() / 100;
+        damage = usedWeapon.damageFormula(this);
 
         // Damaging armor
         target.getEquippedArmor().lowerDurability(usedWeapon.getArmorBreakingCapability());
 
         System.out.println("The " + this.getName() + " has hit " + target.getName() + " for " + damage + " damage");
 
-        // Ensuring damage is
+        // Ensuring damage is not over 100
         if (damage >= 100) damage = 100;
 
         // Adjusts health of enemy according to damage
-        target.setHP(target.getHp() - damage);
+        target.damageThis(damage);
         //getPrW().setDrb(getPrW().getDrb()-5);
 
 
@@ -186,6 +195,12 @@ public class Character { //public abstract class Character = means that construc
     }
     int getHp(){
         return this.hp;
+    }
+    public int getDefense() {
+        return defense;
+    }
+    public int getEffectiveHp() {
+        return effectiveHp;
     }
     int getStrength(){
         return this.strength;
@@ -233,6 +248,15 @@ public class Character { //public abstract class Character = means that construc
         } else {
             this.hp = hp;
         }
+
+        // Setting the EHP
+        this.setEffectiveHp(this.getHp() * (1 + (this.getDefense() / 100)));
+    }
+    public void setDefense(int defense) {
+        this.defense = defense;
+    }
+    public void setEffectiveHp(int effectiveHp) {
+        this.effectiveHp = effectiveHp;
     }
     void setStrength(int strength){
         this.strength = strength;

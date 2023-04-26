@@ -17,7 +17,7 @@ public class MoveManager {
         int slotChoice;
 
         /* Prompts the user to enter a value.
-        * If value is not 1 or 2, it promts the user again
+        * If value is not 1 or 2, it prompts the user again
         */
         do {
             System.out.print("Do you want to change it with your: ");
@@ -26,11 +26,11 @@ public class MoveManager {
             Helpers.weaponInfo(character.getSecondaryWeapon(), 2);
             slotChoice = scanner.nextInt();
             if (slotChoice == 1){
-                character.setPrimaryWeapon(character.getCurrentLocation().getWeaponDrop());
+                character.setPrimaryWeapon((Weapon) character.getCurrentLocation().getItemDrop());
             } else if (slotChoice == 2) {
-                character.setSecondaryWeapon(character.getCurrentLocation().getWeaponDrop());
+                character.setSecondaryWeapon((Weapon) character.getCurrentLocation().getItemDrop());
             } else {
-                System.out.println("Cannot choose that");
+                System.out.println("You cannot choose that");
                 Helpers.line();
             }
         } while (slotChoice != 1 && slotChoice != 2);
@@ -48,14 +48,15 @@ public class MoveManager {
         int slotChoice;
 
         // If there is no weaponDrop then this function is useless
-        if (character.getCurrentLocation().getWeaponDrop()==null){
+        if (character.getCurrentLocation().getItemDrop()==null){
+            System.out.println("You found no weapons in " + character.getCurrentLocation().getName());
             return;
         }
 
         Helpers.line();
 
         // Switch case just for grammatical correctness
-        switch (character.getCurrentLocation().getWeaponDrop().getName().indexOf(0)){
+        switch (character.getCurrentLocation().getItemDrop().getName().indexOf(0)){
             case 'a':
             case 'e':
             case 'i':
@@ -69,7 +70,7 @@ public class MoveManager {
         }
 
 
-        Helpers.weaponInfo(character.getCurrentLocation().getWeaponDrop(), 0);
+        Helpers.weaponInfo((Weapon) character.getCurrentLocation().getItemDrop(), 0);
         System.out.println("Do you want to change it with your current " + character.getPrimaryWeapon().getName() + " and " + character.getSecondaryWeapon().getName() +  " ?");
         System.out.println("Yes[1] or No[2]");
 
@@ -80,7 +81,7 @@ public class MoveManager {
             weaponChoice = scanner.nextInt();
 
             if (weaponChoice == 1) {
-                System.out.println("You picked up the " + character.getCurrentLocation().getWeaponDrop().getName());
+                System.out.println("You picked up the " + character.getCurrentLocation().getItemDrop().getName());
                 weaponSlotSelection(character);
             } else if (weaponChoice == 2){
                 System.out.println("You chose not to pick the weapon up");

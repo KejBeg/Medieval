@@ -8,6 +8,7 @@ public class Enemy extends Character{
     Random rand = new Random();
 
     int distanceFromTarget;
+    int xpReward;
 
     String[] nameList = new String[] {"Brock", "Heisenberg", "Jake", "John", "Robert", "Rudolf", "Emily", "Linus", "Walter", "Hank", "Marie", "Skyler", "Mike", "Mathew", "Greg", "Craig", "Jimmy", "Saul"};
 
@@ -21,6 +22,7 @@ public class Enemy extends Character{
         this.setPrimaryWeapon(new MeleeWeapon());
         this.setDistanceFromTarget(rand.nextInt(4));
         this.setEquippedArmor(new Armor());
+        this.setXpReward(rand.nextInt(20));
     }
 
     /**
@@ -65,7 +67,7 @@ public class Enemy extends Character{
         //if (damage >= 100) damage = 100;
 
         // Modifying target values
-        target.setHP(target.getHp() - damage);
+        target.setEffectiveHp(target.getHp() - damage);
 
         // If target's health is 0, the target dies
         target.die();
@@ -109,9 +111,15 @@ public class Enemy extends Character{
     public int getDistanceFromTarget() {
         return distanceFromTarget;
     }
+    public int getXpReward() {
+        return xpReward;
+    }
 
     // Setters
     public void setDistanceFromTarget(int distanceFromTarget) {
         this.distanceFromTarget = distanceFromTarget;
+    }
+    public void setXpReward(int xpReward) {
+        this.xpReward = xpReward;
     }
 }
