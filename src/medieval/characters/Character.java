@@ -23,10 +23,7 @@ public class Character { //public abstract class Character = means that construc
     private int meleeWeaponSkill;
     private int rangedWeaponSkill;
     private int magicWeaponSkill;
-    private Weapon primaryWeapon;
-    private Weapon secondaryWeapon;
-    private Item primaryItem;
-    private Item secondaryItem;
+    private Item[] inventory = new Item[4];
     private Armor equippedArmor;
     private boolean dead = false;
 
@@ -213,17 +210,8 @@ public class Character { //public abstract class Character = means that construc
     public int getStrength(){
         return this.strength;
     }
-    public Weapon getPrimaryWeapon() {
-        return primaryWeapon;
-    }
-    public Weapon getSecondaryWeapon() {
-        return secondaryWeapon;
-    }
-    public Item getPrimaryItem() {
-        return primaryItem;
-    }
-    public Item getSecondaryItem() {
-        return secondaryItem;
+    public Item[] getInventory() {
+        return inventory;
     }
     public Armor getEquippedArmor() {
         return this.equippedArmor;
@@ -275,17 +263,12 @@ public class Character { //public abstract class Character = means that construc
     public void setStrength(int strength){
         this.strength = strength;
     }
-    public void setPrimaryWeapon(Weapon primaryWeapon) {
-        this.primaryWeapon = primaryWeapon;
-    }
-    public void setSecondaryWeapon(Weapon secondaryWeapon) {
-        this.secondaryWeapon = secondaryWeapon;
-    }
-    public void setPrimaryItem(Item primaryItem) {
-        this.primaryItem = primaryItem;
-    }
-    public void setSecondaryItem(Item secondaryItem) {
-        this.secondaryItem = secondaryItem;
+    public void setInventory(Item item, int index) {
+        if (index+1 > this.inventory.length){
+            return;
+        }
+
+        this.inventory[index] = item;
     }
     public void setEquippedArmor(Armor equippedArmor) {
         this.equippedArmor = equippedArmor;
