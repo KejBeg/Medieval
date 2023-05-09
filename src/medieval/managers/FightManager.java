@@ -1,8 +1,12 @@
 
-package medieval;
+package medieval.managers;
 
 // Imports
-import java.util.ArrayList;
+import medieval.Helpers;
+import medieval.weapons.Weapon;
+import medieval.characters.Character;
+import medieval.characters.Enemy;
+
 import java.util.Scanner;
 
 public class FightManager {

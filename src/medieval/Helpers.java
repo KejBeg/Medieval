@@ -1,5 +1,9 @@
 package medieval;
 
+import medieval.characters.Character;
+import medieval.characters.Enemy;
+import medieval.weapons.Weapon;
+
 public class Helpers{
 
     /**

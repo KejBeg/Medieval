@@ -1,6 +1,6 @@
-package medieval;
+package medieval.weapons;
 
-public class RangedWeapon extends Weapon{
+public class RangedWeapon extends Weapon {
 
     /**
      * RangedWeapon constructor for following arguments

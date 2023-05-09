@@ -1,6 +1,8 @@
-package medieval;
+package medieval.weapons;
 
-public class MeleeWeapon extends Weapon{
+import medieval.characters.Character;
+
+public class MeleeWeapon extends Weapon {
 
 
     /**
@@ -26,7 +28,7 @@ public class MeleeWeapon extends Weapon{
      * @param user needs to get some variables
      * @return returns the damage that should be given
      */
-    int damageFormula(Character user){
+    public int damageFormula(Character user){
         return user.getPrimaryWeapon().getDamage()+user.getStrength();
     }
 

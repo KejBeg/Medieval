@@ -1,10 +1,13 @@
 
-package medieval;
+package medieval.characters;
 
 // Imports
+import medieval.items.Armor;
+import medieval.weapons.MeleeWeapon;
+
 import java.util.Random;
 
-public class Enemy extends Character{
+public class Enemy extends Character {
     Random rand = new Random();
 
     int distanceFromTarget;
@@ -48,7 +51,7 @@ public class Enemy extends Character{
 
         // Makes sure Enemy can reach target
         if (this.getPrimaryWeapon().getRange() < this.getDistanceFromTarget()){
-            System.out.println("Your " + this.getPrimaryWeapon().getName() + " could not reach enemy " + target.getName());
+            System.out.println("Enemy's " + this.getPrimaryWeapon().getName() + " could not reach enemy " + target.getName());
             this.moveCloser();
             return;
         }

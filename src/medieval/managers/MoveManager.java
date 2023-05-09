@@ -1,7 +1,11 @@
-package medieval;
+package medieval.managers;
+
+import medieval.Helpers;
+import medieval.Location;
+import medieval.weapons.Weapon;
+import medieval.characters.Character;
 
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class MoveManager {
     static boolean movedToGoal = false;

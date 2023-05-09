@@ -1,5 +1,11 @@
 
-package medieval;
+package medieval.characters;
+
+import medieval.*;
+import medieval.items.Armor;
+import medieval.items.Item;
+import medieval.managers.MoveManager;
+import medieval.weapons.Weapon;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,6 +25,8 @@ public class Character { //public abstract class Character = means that construc
     private int magicWeaponSkill;
     private Weapon primaryWeapon;
     private Weapon secondaryWeapon;
+    private Item primaryItem;
+    private Item secondaryItem;
     private Armor equippedArmor;
     private boolean dead = false;
 
@@ -57,14 +65,14 @@ public class Character { //public abstract class Character = means that construc
 
     /**
      * Creates a location
-     * @param name
-     * @param numOfEnemies
-     * @param welcomeMessage
-     * @param exitMessage
-     * @param weaponDrop
+     * @param name, String, name of the Location
+     * @param numOfEnemies int, number of enemies in the Location
+     * @param welcomeMessage String, Message than prints upon going to the location
+     * @param exitMessage String, Message than prints upon leaving the location
+     * @param itemDrop Item, the item that drops after defeating the location
      */
-    public void createLocation(String name, int numOfEnemies, String welcomeMessage, String exitMessage, Weapon weaponDrop){
-        this.locationList.add(new Location(name, numOfEnemies, welcomeMessage, exitMessage, weaponDrop));
+    public void createLocation(String name, int numOfEnemies, String welcomeMessage, String exitMessage, Item itemDrop){
+        this.locationList.add(new Location(name, numOfEnemies, welcomeMessage, exitMessage, itemDrop));
     }
 
     /**
@@ -193,7 +201,7 @@ public class Character { //public abstract class Character = means that construc
     public String getName() {
         return name;
     }
-    int getHp(){
+    public int getHp(){
         return this.hp;
     }
     public int getDefense() {
@@ -202,14 +210,20 @@ public class Character { //public abstract class Character = means that construc
     public int getEffectiveHp() {
         return effectiveHp;
     }
-    int getStrength(){
+    public int getStrength(){
         return this.strength;
     }
-    Weapon getPrimaryWeapon() {
+    public Weapon getPrimaryWeapon() {
         return primaryWeapon;
     }
     public Weapon getSecondaryWeapon() {
         return secondaryWeapon;
+    }
+    public Item getPrimaryItem() {
+        return primaryItem;
+    }
+    public Item getSecondaryItem() {
+        return secondaryItem;
     }
     public Armor getEquippedArmor() {
         return this.equippedArmor;
@@ -240,7 +254,7 @@ public class Character { //public abstract class Character = means that construc
     public void setName(String name) {
         this.name = name;
     }
-    void setHP(int hp){
+    public void setHP(int hp){
         if (hp > 100){
             this.hp = 100;
         } else if(hp<0){
@@ -258,14 +272,20 @@ public class Character { //public abstract class Character = means that construc
     public void setEffectiveHp(int effectiveHp) {
         this.effectiveHp = effectiveHp;
     }
-    void setStrength(int strength){
+    public void setStrength(int strength){
         this.strength = strength;
     }
-    void setPrimaryWeapon(Weapon primaryWeapon) {
+    public void setPrimaryWeapon(Weapon primaryWeapon) {
         this.primaryWeapon = primaryWeapon;
     }
     public void setSecondaryWeapon(Weapon secondaryWeapon) {
         this.secondaryWeapon = secondaryWeapon;
+    }
+    public void setPrimaryItem(Item primaryItem) {
+        this.primaryItem = primaryItem;
+    }
+    public void setSecondaryItem(Item secondaryItem) {
+        this.secondaryItem = secondaryItem;
     }
     public void setEquippedArmor(Armor equippedArmor) {
         this.equippedArmor = equippedArmor;

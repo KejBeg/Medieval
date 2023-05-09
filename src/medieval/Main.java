@@ -1,7 +1,13 @@
 
 package medieval;
 
-import java.util.Scanner;
+import medieval.characters.Character;
+import medieval.items.Armor;
+import medieval.items.Item;
+import medieval.managers.FightManager;
+import medieval.weapons.MeleeWeapon;
+import medieval.weapons.RangedWeapon;
+
 import java.util.ArrayList;
 
 
@@ -30,13 +36,13 @@ public class Main {
 
 
         // Creating a Character
-        Character hero = new Character("Hero", 100, 100, new MeleeWeapon(), new MeleeWeapon(), new Armor());
+        Character hero = new Character("Hero", 100, 100, new MeleeWeapon(), ak47, new Armor());
         
         // Creating Locations
         hero.createLocation("Spawn", 1, null, "You survived the first Level :D", m4);
-        hero.createLocation("The Abbys", 2, null, null, axe);
-        hero.createLocation("The Nether", 3, null, null, ak47);
-        hero.createLocation("The Goal", 4, null, "You have accomplished what is thought to be Impossible", knife);
+        hero.createLocation("The Abbys", 1, null, null, axe);
+        hero.createLocation("The Nether", 1, null, null, ak47);
+        hero.createLocation("The Goal", 1, null, "You have accomplished what is thought to be Impossible", knife);
 
 
         // Setting first location

@@ -1,4 +1,4 @@
-package medieval;
+package medieval.weapons;
 
 public class MagicWeapon {
 

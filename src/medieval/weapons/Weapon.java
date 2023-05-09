@@ -1,8 +1,10 @@
 
-package medieval;
+package medieval.weapons;
 
 // Import
-import java.util.List;
+import medieval.items.Item;
+import medieval.characters.Character;
+
 import java.util.Random;
 
 public abstract class Weapon extends Item {
@@ -52,7 +54,7 @@ public abstract class Weapon extends Item {
      * @param user needs to get some variables
      * @return returns the damage that should be given
      */
-    int damageFormula(Character user){
+    public int damageFormula(Character user){
         return user.getPrimaryWeapon().getDamage();
     }
 

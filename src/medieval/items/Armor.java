@@ -1,6 +1,9 @@
-package medieval;
+package medieval.items;
 
-public class Armor extends Item{
+import medieval.Helpers;
+import medieval.items.Item;
+
+public class Armor extends Item {
     private int damageBlockingPercentage;
 
     /**

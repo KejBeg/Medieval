@@ -1,4 +1,4 @@
-package medieval;
+package medieval.items;
 
 public abstract class Item {
     private String name;

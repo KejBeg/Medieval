@@ -1,6 +1,9 @@
 
 package medieval;
 
+import medieval.characters.Enemy;
+import medieval.items.Item;
+
 import java.util.ArrayList;
 
 public class Location {
