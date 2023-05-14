@@ -52,8 +52,6 @@ public class Character { //public abstract class Character = means that construc
         this.setName(name);
         this.setHP(hp);
         this.setStrength(strength);
-        this.setPrimaryWeapon(primaryWeapon);
-        this.setSecondaryWeapon(secondaryWeapon);
         this.setEquippedArmor(equippedArmor);
     }
 
